@@ -5,6 +5,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GAS Post Testing</title>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
+    <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
 </head>
 <body>
     <form id="form-upload-images">
@@ -21,19 +24,19 @@
                 <ul class="gallery">
                     <li>
                         <span>Image Placeholder</span>
-                        <span class="saved d-none">Saved</span>
+                        <span id="testsave" class="saved d-none"></span>
                     </li>
                     <li>
                         <span>Image Placeholder</span>
-                        <span class="saved d-none">Saved</span>
+                        <span class="saved d-none"></span>
                     </li>
                     <li>
                         <span>Image Placeholder</span>
-                        <span class="saved d-none">Saved</span>
+                        <span class="saved d-none"></span>
                     </li>
                     <li>
                         <span>Image Placeholder</span>
-                        <span class="saved d-none">Saved</span>
+                        <span class="saved d-none"></span>
                     </li>
                 </ul>
             </div>
@@ -140,7 +143,7 @@
 
     <script>
         const form = document.getElementById("form-upload-images")
-        const url = "https://script.google.com/macros/s/AKfycbxoMQ1JDHbHLwlc11iY86E62bEp1lzgsTXaCOg15YyLuKNHfhz0is4ngQLaa0EXo0sf/exec"
+        const url = "https://script.google.com/macros/s/AKfycbx0LG6ansKAKiCkYrp618pmXqamXGAExctaXtM7fTqdJ4vj3oaVx2q4VLrOo03SId6i/exec"
         form.addEventListener('submit', function(e) {
             e.preventDefault()
             const formdata = new FormData(this)
@@ -158,10 +161,8 @@
                 _data[key] = value
                 console.log(`${key}: ${value} \n`)
             }
-/*             console.log(_data)
-            const data = {
-                'eventid' : 'CABE38'
-            } */
+            _data.filename = `${_data.lastname}-${_data.firstname}-${_data.worktitle}-${_data.medium}-${_data.width}x${_data.height}-${_data.price}`
+            _data.timestamp = moment().format("MMMM Do YYYY, h:mm:ss a")
             fetch(url, {
                 method: "POST",
                 mode: "no-cors",
@@ -172,19 +173,16 @@
                 },
 
                 body: JSON.stringify(_data)
-/*                 mode: 'cors',
-                cache: 'no-cache',
-                credentials: 'same-origin',
-                body: payload,
-                headers: {
-                    'Content-Type': 'application/json'
-                } */
-
             })
-            .then(res => res.json())
-            .then(data => console.log(data))
+            .then(res => res)
+            .then(showComplete())
             .catch(err => console.log(err))
         })
+
+        function showComplete() {
+            const el = document.getElementById('testsave')
+            el.innerText = "SAVED"
+        }
     </script>
 </body>
 </html>

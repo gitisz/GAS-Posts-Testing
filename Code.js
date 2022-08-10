@@ -1,35 +1,15 @@
 const sheetId = '1n-BYfns_ki5UlI51PZL_5p4WdCF2fVOgHA4TbGXPfOo'
 
-/* const ROUTES = {
-  path : function (r, callback) {
-      ROUTES[r] = callback
-  }
-}
-
-function route(path, req) {
-  let result = ROUTES[path](req)
-  return result
-}
- */
-/* const doPost = (request = {}) => {
-  const { 
-    postData: { 
-      contents, 
-      type 
-    } = {} 
-  } = request */
-function doPost(e) {
-  const body = e.postData.contents;
+function doPost(request) {
+  const body = request.postData.contents;
   const bodyJSON = JSON.parse(body)
   const ss = SpreadsheetApp.openById(sheetId)
   const ws = ss.getSheetByName("Sheet1")
-  //ws.appendRow(["CABE37"])
   const fileid = ""
   const member = "Yes"
   const availability = ""
   const hidden = ""
   const fullname = bodyJSON.firstname + " " + bodyJSON.lastname
-  const timestamp = Date.now()
   const row = [
     bodyJSON.eventid,
     bodyJSON.eventtitle,
@@ -48,10 +28,11 @@ function doPost(e) {
     availability,
     hidden,
     fullname,
-    timestamp.toString()
+    bodyJSON.timestamp
   ]
   ws.appendRow(row)
-  //return ContentService.createTextOutput('complete')
+  const response = {status: 200, data: row}
+  return JSON.stringify(response)
 }
   //const path = request.parameter['q']
   //const id = e.parameter['id']
