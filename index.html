@@ -10,14 +10,30 @@
 <body>  
                  <!---------------- P U T   Y O U R   W E B - A P P   U R L   H E R E  --------------->    
     <form 
-        action="https://script.google.com/macros/s/AKfycbzlf22bkdnskalbe3wxD_oNICj7q2wPB5lB0FTE35lVIEeCRpLi4BB9TdJJAI_qNkys/exec" 
+        action="https://script.google.com/macros/s/AKfycbybll9XLYAE_dPJTtMq2mi5ThiokipVgz1ydKZXbieKfQAf-G7mqsMWQ_VleGNEAaUh/exec" 
         id="form" 
         method="post">
         
         Upload a file
         <div id="data"></div>
         <label for="uploadFile">File
-        <input name="file" id="uploadfile" type="file" accept="image/*">   </label>     
+        <input name="file" id="uploadfile" type="file" accept="image/*">   </label>    
+		<div class="row mb-3 mt-2">
+			<label
+				for="worktitle"
+				class="col-md-1 col-form-label"
+				>Title</label>
+			<div class="col-md-11">
+				<input
+					type="text"
+					name="worktitle"
+					id="worktitle"
+					class="form-control"
+					placeholder="Required"
+					required
+				/>
+			</div>
+		</div> 
         <input id="btnSubmit" type="submit">
     </form>
 
@@ -53,9 +69,11 @@
 				// create data object
 				// form will send data via #data element
 				// https://gist.github.com/tanaikech/2f16f467c94612dc83920a3158614d95
+				const newFilename = "Green-James-TestWorkTitle-medium-size-price"
+
 				html = '<input type="hidden" name="data" value="' + e.target.result.replace(/^.*,/, '') + '" >';
 				html += '<input type="hidden" name="mimetype" value="' + e.target.result.match(/^.*(?=;)/)[0] + '" >';
-				html += '<input type="hidden" name="filename" value="' + e.target.fileName + '" >';    
+				html += '<input type="hidden" name="filename" value="' + newFilename + '" >';    
 				const hiddenData = document.getElementById('data')
 				hiddenData.innerHTML = html
 

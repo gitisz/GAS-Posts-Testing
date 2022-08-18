@@ -8,13 +8,21 @@ function doPost(e) {
   var folder = DriveApp.getFolderById('1JL85kWwmAPWqyI-0c735N06a4EDpPGvZ');                      // your folder id
   var file = folder.createFile(blob);
   
+  var fileName = e.parameters.filename;
+  var workTitle = e.parameters.worktitle;
+
   // put the image with the help of a formula in a cell in Google Sheets
   // https://webapps.stackexchange.com/questions/86081/insert-image-from-google-drive-into-google-sheets
-  var ss = SpreadsheetApp.openById(sheetId);              // your spreadsheet id
-  var r = ss.getSheetByName('Sheet1').getRange('S2');                                        // your sheet name and cell-address
+  var ss = SpreadsheetApp.openById(sheetId);              
+  var r = ss.getSheetByName('Sheet1').getRange('S2');  
+  var fn = ss.getSheetByName('Sheet1').getRange('L2');  
+  var wt = ss.getSheetByName('Sheet1').getRange('G2');    
+  var fid = ss.getSheetByName('Sheet1').getRange('M2');                                
   var id = file.getId();
   r.setFormula('=IMAGE("https://docs.google.com/uc?export=view&id=' + id + '")');
-  
+  fn.setValue(fileName);
+  wt.setValue(workTitle);
+  fid.setValue(id);
 
   // here I want browser window to close 
   PropertiesService.getScriptProperties().setProperty('my_unique_key', 'Done')  
