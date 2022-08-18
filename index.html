@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-	<style>
+<!-- 	<style>
 
 	  #progress_bar {
 		margin: 10px 0;
@@ -27,7 +27,7 @@
 		height: auto;
 		width: 0;
 	  }
-	</style>
+	</style> -->
 </head>
 <body>  
                  <!---------------- P U T   Y O U R   W E B - A P P   U R L   H E R E  --------------->    
@@ -42,7 +42,7 @@
         <input name="file" id="uploadfile" type="file" accept="image/*">   </label>     
         <input id="btnSubmit" type="submit">
     </form>
-    <div id="progress_bar"><div class="percent">0%</div></div>
+    <!-- <div id="progress_bar"><div class="percent">0%</div></div> -->
 
 	<script>
 
@@ -69,7 +69,7 @@
 		function closeMe() { google.script.host.close(); }
 
 		// onprogress
-		function updateProgress(evt) {
+/* 		function updateProgress(evt) {
 			// evt is an ProgressEvent.
 			if (evt.lengthComputable) {
 				var percentLoaded = Math.round((evt.loaded / evt.total) * 100);
@@ -79,7 +79,7 @@
 					progress.textContent = percentLoaded + '%';
 				}
 			}
-		}
+		} */
 		
 		// to forse click-event. The form with file-select will open automatically
 		function clickForse_() {
@@ -90,14 +90,14 @@
 		// on file selected by user
 		function handleFileSelect(evt) {
 			// Reset progress indicator on new file selection.
-			progress.style.width = '0%';
-			progress.textContent = '0%';	
+/* 			progress.style.width = '0%';
+			progress.textContent = '0%';	 */
 			reader = new FileReader();
 			// remember selected file (first selected)
 			var file = this.files[0];    
 			reader.fileName = file.name; // save name
 			reader.onerror = errorHandler;
-			reader.onprogress = updateProgress;
+			/* reader.onprogress = updateProgress; */
 			reader.onabort = function(e) {
 				alert('File read cancelled');
 			};
@@ -114,8 +114,8 @@
 				const hiddenData = document.getElementById('data')
 				hiddenData.innerHTML = html
 				// Ensure that the progress bar displays 100% at the end.
-				progress.style.width = '100%';
-				progress.textContent = '100%';
+/* 				progress.style.width = '100%';
+				progress.textContent = '100%'; */
 				// The form will close automatically when load to Google Drive is finished
 				//google.script.run.withSuccessHandler(closeMe).clientSideFunctionToProcessReturnedData();
 			}
