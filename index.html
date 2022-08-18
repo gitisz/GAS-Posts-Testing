@@ -6,28 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-<!-- 	<style>
-
-	  #progress_bar {
-		margin: 10px 0;
-		padding: 3px;
-		border: 1px solid #000;
-		font-size: 14px;
-		clear: both;
-		opacity: 0;
-		-moz-transition: opacity 1s linear;
-		-o-transition: opacity 1s linear;
-		-webkit-transition: opacity 1s linear;
-	  }
-	  #progress_bar.loading {
-		opacity: 1.0;
-	  }
-	  #progress_bar .percent {
-		background-color: #99ccff;
-		height: auto;
-		width: 0;
-	  }
-	</style> -->
 </head>
 <body>  
                  <!---------------- P U T   Y O U R   W E B - A P P   U R L   H E R E  --------------->    
@@ -42,13 +20,9 @@
         <input name="file" id="uploadfile" type="file" accept="image/*">   </label>     
         <input id="btnSubmit" type="submit">
     </form>
-    <!-- <div id="progress_bar"><div class="percent">0%</div></div> -->
 
 	<script>
-
 		var reader;
-		var progress = document.querySelector('.percent');
-
 		// on error
 		function errorHandler(evt) {
 			switch(evt.target.error.code) {
@@ -64,45 +38,16 @@
 				alert('An error occurred reading this file.');
 			};
 		}
-		
-		// close html-window: https://developers.google.com/apps-script/guides/html/communication
-		function closeMe() { google.script.host.close(); }
-
-		// onprogress
-/* 		function updateProgress(evt) {
-			// evt is an ProgressEvent.
-			if (evt.lengthComputable) {
-				var percentLoaded = Math.round((evt.loaded / evt.total) * 100);
-				// Increase the progress bar length.
-				if (percentLoaded < 100) {
-					progress.style.width = percentLoaded + '%';
-					progress.textContent = percentLoaded + '%';
-				}
-			}
-		} */
-		
-		// to forse click-event. The form with file-select will open automatically
-		function clickForse_() {
-			var element = document.getElementById("uploadfile");
-			element.click();   
-		}  		
-		
+				
 		// on file selected by user
 		function handleFileSelect(evt) {
-			// Reset progress indicator on new file selection.
-/* 			progress.style.width = '0%';
-			progress.textContent = '0%';	 */
 			reader = new FileReader();
 			// remember selected file (first selected)
 			var file = this.files[0];    
 			reader.fileName = file.name; // save name
 			reader.onerror = errorHandler;
-			/* reader.onprogress = updateProgress; */
 			reader.onabort = function(e) {
 				alert('File read cancelled');
-			};
-			reader.onloadstart = function(e) {
-				document.getElementById('progress_bar').className = 'loading';
 			};
 			reader.onload = function(e) {
 				// create data object
@@ -113,11 +58,7 @@
 				html += '<input type="hidden" name="filename" value="' + e.target.fileName + '" >';    
 				const hiddenData = document.getElementById('data')
 				hiddenData.innerHTML = html
-				// Ensure that the progress bar displays 100% at the end.
-/* 				progress.style.width = '100%';
-				progress.textContent = '100%'; */
-				// The form will close automatically when load to Google Drive is finished
-				//google.script.run.withSuccessHandler(closeMe).clientSideFunctionToProcessReturnedData();
+
 			}
 			// Read in the image file as a Data URL	
 			reader.readAsDataURL(file);
@@ -125,8 +66,7 @@
 
 		// when user clicks button #uploadfile, add event handleFileSelect
 		document.getElementById('uploadfile').addEventListener('change', handleFileSelect, false);
-		// when document is loaded, add event 
-		document.addEventListener('DOMContentLoaded', clickForse_, false); // gives error
+
     </script>
 </body>
 </html>
