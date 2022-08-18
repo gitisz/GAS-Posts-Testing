@@ -1,105 +1,109 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-</head>
-<body>  
-                 <!---------------- P U T   Y O U R   W E B - A P P   U R L   H E R E  --------------->    
-    <form 
-        action="https://script.google.com/macros/s/AKfycbyqovkCc0mTZoobG0dg3eybehJUuMc5ALSXPYheNooUHTe89WILSuGN7I_1LvA98j0W/exec" 
-        id="form" 
-        method="post">
-		<input id="data-hidden" type="hidden" name="data" value="" >
-		<input id="mimetype-hidden" type="hidden" name="mimetype" value="" >
-		<input id="filename-hidden" type="hidden" name="filename" value="" >
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <form
+      action="https://script.google.com/macros/s/AKfycbyqovkCc0mTZoobG0dg3eybehJUuMc5ALSXPYheNooUHTe89WILSuGN7I_1LvA98j0W/exec"
+      id="upload-form"
+      method="post"
+    >
+      <input id="imagedata-hidden" type="hidden" name="image" value="" />
+      <input id="mimetype-hidden" type="hidden" name="mimetype" value="" />
+      <input id="filename-hidden" type="hidden" name="filename" value="" />
 
-        Upload a file
-        <div id="data"></div>
-        <label for="uploadFile">File
-        <input name="file" id="uploadfile" type="file" accept="image/*">   </label>    
-		<div class="row mb-3 mt-2">
-			<label
-				for="worktitle"
-				class="col-md-1 col-form-label"
-				>Title</label>
-			<div class="col-md-11">
-				<input
-					type="text"
-					name="worktitle"
-					id="worktitle"
-					class="form-control"
-					placeholder="Required"
-					required
-				/>
-			</div>
-		</div> 
-        <input id="btnSubmit" type="submit">
+      Upload a file
+      <div id="data"></div>
+      <label for="uploadFile"
+        >File <input name="file" id="uploadfile" type="file" accept="image/*" />
+      </label>
+      <div class="row mb-3 mt-2">
+        <label for="worktitle" class="col-md-1 col-form-label">Title</label>
+        <div class="col-md-11">
+          <input
+            type="text"
+            name="worktitle"
+            id="worktitle"
+            class="form-control"
+            placeholder="Required"
+            required
+          />
+        </div>
+      </div>
+      <input id="btnSubmit" type="submit" />
     </form>
+    <div id="payload"></div>
+    <script>
+      var reader;
+      // on error
+      function errorHandler(evt) {
+        switch (evt.target.error.code) {
+          case evt.target.error.NOT_FOUND_ERR:
+            alert("File Not Found!");
+            break;
+          case evt.target.error.NOT_READABLE_ERR:
+            alert("File is not readable");
+            break;
+          case evt.target.error.ABORT_ERR:
+            break; // noop
+          default:
+            alert("An error occurred reading this file.");
+        }
+      }
 
-	<script>
-		var reader;
-		// on error
-		function errorHandler(evt) {
-			switch(evt.target.error.code) {
-			case evt.target.error.NOT_FOUND_ERR:
-				alert('File Not Found!');
-				break;
-			case evt.target.error.NOT_READABLE_ERR:
-				alert('File is not readable');
-				break;
-			case evt.target.error.ABORT_ERR:
-				break; // noop
-				default:
-				alert('An error occurred reading this file.');
-			};
-		}
-				
-		// on file selected by user
-		function handleFileSelect(evt) {
-			reader = new FileReader();
-			// remember selected file (first selected)
-			var file = this.files[0];    
-			reader.fileName = file.name; // save name
-			reader.onerror = errorHandler;
-			reader.onabort = function(e) {
-				alert('File read cancelled');
-			};
-			reader.onload = function(e) {
-				const dataHidden = document.getElementById('data-hidden')
-				const mimetypeHidden = document.getElementById('mimetype-hidden')
-				const filenameHidden = document.getElementById('filename-hidden')
-				const newFilename = "Green-James-TestWorkTitle-medium-size-price"
+      // on file selected by user
+      function handleFileSelect(evt) {
+        reader = new FileReader();
+        // remember selected file (first selected)
+        var file = this.files[0];
+        reader.fileName = file.name; // save name
+        reader.onerror = errorHandler;
+        reader.onabort = function (e) {
+          alert("File read cancelled");
+        };
+        reader.onload = function (e) {
+          const imagedataHidden = document.getElementById("imagedata-hidden");
+          const mimetypeHidden = document.getElementById("mimetype-hidden");
+          const filenameHidden = document.getElementById("filename-hidden");
+          const newFilename = "Green-James-TestWorkTitle-medium-size-price";
 
-				dataHidden.value = e.target.result.replace(/^.*,/, '')
-				mimetypeHidden.value = e.target.result.match(/^.*(?=;)/)[0]
-				filenameHidden.value = newFilename
+          imagedataHidden.value = e.target.result.replace(/^.*,/, "");
+          mimetypeHidden.value = e.target.result.match(/^.*(?=;)/)[0];
+          filenameHidden.value = newFilename;
+        };
+        // Read in the image file as a Data URL
+        reader.readAsDataURL(file);
+      }
 
-/* 				const testHidden = document.getElementById('test-hidden')
-				testHidden.value = "image loaded"
-				console.log(testHidden.value) */
-				// create data object
-				// form will send data via #data element
-				// https://gist.github.com/tanaikech/2f16f467c94612dc83920a3158614d95
+      function handleSubmit(e) {
+        e.preventDefault();
 
+        const payload = new FormData(document.getElementById("upload-form"));
+        const output = document.getElementById("payload");
 
-/* 				html = '<input type="hidden" name="data" value="' + e.target.result.replace(/^.*,/, '') + '" >';
-				html += '<input type="hidden" name="mimetype" value="' + e.target.result.match(/^.*(?=;)/)[0] + '" >';
-				html += '<input type="hidden" name="filename" value="' + newFilename + '" >';   */  
-				/* const hiddenData = document.getElementById('data') 
-				hiddenData.innerHTML = html*/
+        for (const [key, value] of payload) {
+          output.textContent += `${key}: ${value}\n`;
+        }
+        console.log("submit");
+      }
 
-			}
-			// Read in the image file as a Data URL	
-			reader.readAsDataURL(file);
-		}
-
-		// when user clicks button #uploadfile, add event handleFileSelect
-		document.getElementById('uploadfile').addEventListener('change', handleFileSelect, false);
-
+      // when user clicks button #uploadfile, add event handleFileSelect
+      document
+        .getElementById("uploadfile")
+        .addEventListener("change", handleFileSelect, false);
+      document
+        .getElementById("upload-form")
+        .addEventListener("submit", handleSubmit);
     </script>
-</body>
+  </body>
 </html>
