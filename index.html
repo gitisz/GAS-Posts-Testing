@@ -4,185 +4,131 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GAS Post Testing</title>
-    <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
-    <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+    <title>Document</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<style>
+
+	  #progress_bar {
+		margin: 10px 0;
+		padding: 3px;
+		border: 1px solid #000;
+		font-size: 14px;
+		clear: both;
+		opacity: 0;
+		-moz-transition: opacity 1s linear;
+		-o-transition: opacity 1s linear;
+		-webkit-transition: opacity 1s linear;
+	  }
+	  #progress_bar.loading {
+		opacity: 1.0;
+	  }
+	  #progress_bar .percent {
+		background-color: #99ccff;
+		height: auto;
+		width: 0;
+	  }
+	</style>
 </head>
-<body>
-    <form id="form-upload-images">
-        <div id="upload-images" class="d-none member-access">
-            <div class="header">
-                <span class="material-symbols-outlined icon">
-                    file_upload
-                </span>
-                <span class="text">Add Submissions</span>
-            </div>
-
-            <div id="upload-gallery" class="d-none">
-                <h3 class="fs-6">Images Uploaded</h3>
-                <ul class="gallery">
-                    <li>
-                        <span>Image Placeholder</span>
-                        <span id="testsave" class="saved d-none"></span>
-                    </li>
-                    <li>
-                        <span>Image Placeholder</span>
-                        <span class="saved d-none"></span>
-                    </li>
-                    <li>
-                        <span>Image Placeholder</span>
-                        <span class="saved d-none"></span>
-                    </li>
-                    <li>
-                        <span>Image Placeholder</span>
-                        <span class="saved d-none"></span>
-                    </li>
-                </ul>
-            </div>
-            <div class="mb-3">
-                <div class="banner">
-                    <label for="formFile" class="form-label"
-                        >You can submit up to
-                        <span id="max-entries" class="fw-bold text-warning">fetching...</span>
-                        images</label>
-                    <input class="form-control" type="file" id="formFile" />
-                </div>
-
-                <div id="image-details" class="d-none">
-                    <div class="row mb-3 mt-2">
-                        <label
-                            for="worktitle"
-                            class="col-md-1 col-form-label"
-                            >Title</label>
-                        <div class="col-md-11">
-                            <input
-                                type="text"
-                                name="worktitle"
-                                id="worktitle"
-                                class="form-control"
-                            />
-                        </div>
-                    </div>
-                    <div class="row mb-3 mt-2">
-                        <label
-                            for="width"
-                            class="col-md-1 col-form-label"
-                        >
-                            Width (in)
-                        </label>
-                        <div class="col-md-2">
-                            <input
-                                type="text"
-                                name="width"
-                                id="width"
-                                class="form-control"
-                            />
-                        </div>
-                        <label
-                            for="height"
-                            class="col-md-1 col-form-label"
-                        >
-                            Height (in)
-                        </label>
-                        <div class="col-md-2">
-                            <input
-                                type="text"
-                                name="height"
-                                id="height"
-                                class="form-control"
-                            />
-                        </div>
-                        <label
-                            for="medium"
-                            class="col-md-1 col-form-label"
-                        >
-                            Medium
-                        </label>
-                        <div class="col-md-5">
-                            <input
-                                type="text"
-                                name="medium"
-                                id="medium"
-                                class="form-control"
-                            />
-                        </div>
-                    </div>
-                    <div class="row mb-3">
-                        <label
-                            for="price"
-                            class="col-md-1 col-form-label mt-2"
-                        >
-                            Price $
-                        </label>
-                        <div class="col-md-2 mt-2">
-                            <input
-                                type="text"
-                                name="price"
-                                id="price"
-                                class="form-control"
-                            />
-                        </div>
-                        <div class="col-auto mt-2">
-                            <button type="submit" class="btn btn-primary">
-                                Submit Work
-                            </button>
-                        </div>
-                        <div class="col-auto col-form-label mt-2">
-                            <span class="label">Total Fee: </span>
-                            <span id="totalFee" class="text-muted"
-                                >Calculating ...</span
-                            >
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
+<body>  
+                 <!---------------- P U T   Y O U R   W E B - A P P   U R L   H E R E  --------------->    
+    <form 
+        action="https://script.google.com/macros/s/AKfycbzlf22bkdnskalbe3wxD_oNICj7q2wPB5lB0FTE35lVIEeCRpLi4BB9TdJJAI_qNkys/exec" 
+        id="form" 
+        method="post">
+        
+        Upload a file
+        <div id="data"></div>
+        <label for="uploadFile">File
+        <input name="file" id="uploadfile" type="file" accept="image/*">   </label>     
+        <input id="btnSubmit" type="submit">
     </form>
+    <div id="progress_bar"><div class="percent">0%</div></div>
 
-    <script>
-        const form = document.getElementById("form-upload-images")
-        const url = "https://script.google.com/macros/s/AKfycbx0LG6ansKAKiCkYrp618pmXqamXGAExctaXtM7fTqdJ4vj3oaVx2q4VLrOo03SId6i/exec"
-        form.addEventListener('submit', function(e) {
-            e.preventDefault()
-            const formdata = new FormData(this)
-            const payload = [ 
-                ['eventid', 'CABE37'],
-                ['eventtitle', 'Test Event'],
-                ['firstname', 'James'],
-                ['lastname', 'Green'],
-                ['email', 'jamesgreen.311@gmail.com'],
-                ['phone', '804-516-1379'],
-                ...formdata
-            ]
-            let _data = {}
-            for (const [key, value] of payload) {
-                _data[key] = value
-                console.log(`${key}: ${value} \n`)
-            }
-            _data.filename = `${_data.lastname}-${_data.firstname}-${_data.worktitle}-${_data.medium}-${_data.width}x${_data.height}-${_data.price}`
-            _data.timestamp = moment().format("MMMM Do YYYY, h:mm:ss a")
-            fetch(url, {
-                method: "POST",
-                mode: "no-cors",
-                cache: 'no-cache',
-                credentials: 'omit',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
+	<script>
 
-                body: JSON.stringify(_data)
-            })
-            .then(res => res)
-            .then(showComplete())
-            .catch(err => console.log(err))
-        })
+		var reader;
+		var progress = document.querySelector('.percent');
 
-        function showComplete() {
-            const el = document.getElementById('testsave')
-            el.innerText = "SAVED"
-        }
+		// on error
+		function errorHandler(evt) {
+			switch(evt.target.error.code) {
+			case evt.target.error.NOT_FOUND_ERR:
+				alert('File Not Found!');
+				break;
+			case evt.target.error.NOT_READABLE_ERR:
+				alert('File is not readable');
+				break;
+			case evt.target.error.ABORT_ERR:
+				break; // noop
+				default:
+				alert('An error occurred reading this file.');
+			};
+		}
+		
+		// close html-window: https://developers.google.com/apps-script/guides/html/communication
+		function closeMe() { google.script.host.close(); }
+
+		// onprogress
+		function updateProgress(evt) {
+			// evt is an ProgressEvent.
+			if (evt.lengthComputable) {
+				var percentLoaded = Math.round((evt.loaded / evt.total) * 100);
+				// Increase the progress bar length.
+				if (percentLoaded < 100) {
+					progress.style.width = percentLoaded + '%';
+					progress.textContent = percentLoaded + '%';
+				}
+			}
+		}
+		
+		// to forse click-event. The form with file-select will open automatically
+		function clickForse_() {
+			var element = document.getElementById("uploadfile");
+			element.click();   
+		}  		
+		
+		// on file selected by user
+		function handleFileSelect(evt) {
+			// Reset progress indicator on new file selection.
+			progress.style.width = '0%';
+			progress.textContent = '0%';	
+			reader = new FileReader();
+			// remember selected file (first selected)
+			var file = this.files[0];    
+			reader.fileName = file.name; // save name
+			reader.onerror = errorHandler;
+			reader.onprogress = updateProgress;
+			reader.onabort = function(e) {
+				alert('File read cancelled');
+			};
+			reader.onloadstart = function(e) {
+				document.getElementById('progress_bar').className = 'loading';
+			};
+			reader.onload = function(e) {
+				// create data object
+				// form will send data via #data element
+				// https://gist.github.com/tanaikech/2f16f467c94612dc83920a3158614d95
+				html = '<input type="hidden" name="data" value="' + e.target.result.replace(/^.*,/, '') + '" >';
+				html += '<input type="hidden" name="mimetype" value="' + e.target.result.match(/^.*(?=;)/)[0] + '" >';
+				html += '<input type="hidden" name="filename" value="' + e.target.fileName + '" >';    
+				const hiddenData = document.getElementById('data')
+				hiddenData.innerHTML = html
+				//$("#data").empty().append(html);  
+				// Ensure that the progress bar displays 100% at the end.
+				progress.style.width = '100%';
+				progress.textContent = '100%';
+				// The form will close automatically when load to Google Drive is finished
+				//google.script.run.withSuccessHandler(closeMe).clientSideFunctionToProcessReturnedData();
+			}
+			// Read in the image file as a Data URL	
+			reader.readAsDataURL(file);
+		}
+
+		// when user clicks button #uploadfile, add event handleFileSelect
+		document.getElementById('uploadfile').addEventListener('change', handleFileSelect, false);
+		// when document is loaded, add event 
+		document.addEventListener('DOMContentLoaded', clickForse_, false); // gives error
     </script>
 </body>
 </html>
