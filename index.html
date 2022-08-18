@@ -14,7 +14,7 @@
   </head>
   <body>
     <form
-      action="https://script.google.com/macros/s/AKfycbyqovkCc0mTZoobG0dg3eybehJUuMc5ALSXPYheNooUHTe89WILSuGN7I_1LvA98j0W/exec"
+      action="https://script.google.com/macros/s/AKfycbwIpRwx0cq2Vs2Qdu-5RKCAMYnwfRwa3V_zgE5moxUFJtGduHDeYP9u9_StfVcgS4kx/exec"
       id="upload-form"
       method="post"
     >
@@ -23,7 +23,6 @@
       <input id="filename-hidden" type="hidden" name="filename" value="" />
 
       Upload a file
-      <div id="data"></div>
       <label for="uploadFile"
         >File <input name="file" id="uploadfile" type="file" accept="image/*" />
       </label>
@@ -86,7 +85,7 @@
       }
 
       function handleSubmit(e) {
-        e.preventDefault();
+        //e.preventDefault();
 
         const payload = new FormData(document.getElementById("upload-form"));
         const output = document.getElementById("payload");

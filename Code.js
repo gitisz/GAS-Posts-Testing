@@ -2,8 +2,8 @@ const sheetId = '1n-BYfns_ki5UlI51PZL_5p4WdCF2fVOgHA4TbGXPfOo'
 
 // this function executes from html-form
 function doPost(e) {
-  var data = Utilities.base64Decode(e.parameters.data);
-  var blob = Utilities.newBlob(data, e.parameters.mimetype, e.parameters.filename);
+  var image = Utilities.base64Decode(e.parameters.image);
+  var blob = Utilities.newBlob(image, e.parameters.mimetype, e.parameters.filename);
   // save image to selected folder
   var folder = DriveApp.getFolderById('1JL85kWwmAPWqyI-0c735N06a4EDpPGvZ');                      // your folder id
   var file = folder.createFile(blob);
