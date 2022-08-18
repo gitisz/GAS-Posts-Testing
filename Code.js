@@ -24,11 +24,7 @@ function doPost(e) {
   wt.setValue(workTitle);
   fid.setValue(id);
 
-  // here I want browser window to close 
-  PropertiesService.getScriptProperties().setProperty('my_unique_key', 'Done')  
-  var output = HtmlService.createHtmlOutput("<b>Done!</b>");
-  output.setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
-  return output;
+  return ContentService.createTextOutput('Success')
 }
 function doGet(e) {
 }

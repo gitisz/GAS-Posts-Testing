@@ -10,10 +10,13 @@
 <body>  
                  <!---------------- P U T   Y O U R   W E B - A P P   U R L   H E R E  --------------->    
     <form 
-        action="https://script.google.com/macros/s/AKfycbybll9XLYAE_dPJTtMq2mi5ThiokipVgz1ydKZXbieKfQAf-G7mqsMWQ_VleGNEAaUh/exec" 
+        action="https://script.google.com/macros/s/AKfycbyqovkCc0mTZoobG0dg3eybehJUuMc5ALSXPYheNooUHTe89WILSuGN7I_1LvA98j0W/exec" 
         id="form" 
         method="post">
-        
+		<input id="data-hidden" type="hidden" name="data" value="" >
+		<input id="mimetype-hidden" type="hidden" name="mimetype" value="" >
+		<input id="filename-hidden" type="hidden" name="filename" value="" >
+
         Upload a file
         <div id="data"></div>
         <label for="uploadFile">File
@@ -66,16 +69,28 @@
 				alert('File read cancelled');
 			};
 			reader.onload = function(e) {
+				const dataHidden = document.getElementById('data-hidden')
+				const mimetypeHidden = document.getElementById('mimetype-hidden')
+				const filenameHidden = document.getElementById('filename-hidden')
+				const newFilename = "Green-James-TestWorkTitle-medium-size-price"
+
+				dataHidden.value = e.target.result.replace(/^.*,/, '')
+				mimetypeHidden.value = e.target.result.match(/^.*(?=;)/)[0]
+				filenameHidden.value = newFilename
+
+/* 				const testHidden = document.getElementById('test-hidden')
+				testHidden.value = "image loaded"
+				console.log(testHidden.value) */
 				// create data object
 				// form will send data via #data element
 				// https://gist.github.com/tanaikech/2f16f467c94612dc83920a3158614d95
-				const newFilename = "Green-James-TestWorkTitle-medium-size-price"
 
-				html = '<input type="hidden" name="data" value="' + e.target.result.replace(/^.*,/, '') + '" >';
+
+/* 				html = '<input type="hidden" name="data" value="' + e.target.result.replace(/^.*,/, '') + '" >';
 				html += '<input type="hidden" name="mimetype" value="' + e.target.result.match(/^.*(?=;)/)[0] + '" >';
-				html += '<input type="hidden" name="filename" value="' + newFilename + '" >';    
-				const hiddenData = document.getElementById('data')
-				hiddenData.innerHTML = html
+				html += '<input type="hidden" name="filename" value="' + newFilename + '" >';   */  
+				/* const hiddenData = document.getElementById('data') 
+				hiddenData.innerHTML = html*/
 
 			}
 			// Read in the image file as a Data URL	
