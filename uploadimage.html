@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <form
+      action="https://script.google.com/macros/s/AKfycbzIFdc8WsXthDgXY31iozebBhcE15Q1gUU4cJg1Fd3yuJfigZXFl7BaDth7fEnQ4eOu/exec"
+      id="upload-form"
+      method="post"
+    >
+      <input id="imagedata-hidden" type="hidden" name="image" value="" />
+      <input id="mimetype-hidden" type="hidden" name="mimetype" value="" />
+      <input id="filename-hidden" type="hidden" name="filename" value="" />
+
+      Upload a file
+      <label for="uploadFile"
+        >File <input name="file" id="uploadfile" type="file" accept="image/*" />
+      </label>
+
+      <input id="btnSubmit" type="submit" />
+    </form>
+    <div id="payload"><img id="showimage" /></div>
+    <script>
+      var reader;
+      // on error
+      function errorHandler(evt) {
+        switch (evt.target.error.code) {
+          case evt.target.error.NOT_FOUND_ERR:
+            alert("File Not Found!");
+            break;
+          case evt.target.error.NOT_READABLE_ERR:
+            alert("File is not readable");
+            break;
+          case evt.target.error.ABORT_ERR:
+            break; // noop
+          default:
+            alert("An error occurred reading this file.");
+        }
+      }
+
+      // on file selected by user
+      function handleFileSelect(evt) {
+        reader = new FileReader();
+        // remember selected file (first selected)
+        var file = this.files[0];
+        reader.fileName = file.name; // save name
+        reader.onerror = errorHandler;
+        reader.onabort = function (e) {
+          alert("File read cancelled");
+        };
+        reader.onload = function (e) {
+          const imagedataHidden = document.getElementById("imagedata-hidden");
+          const mimetypeHidden = document.getElementById("mimetype-hidden");
+          const filenameHidden = document.getElementById("filename-hidden");
+          const newFilename = "Green-James-TestWorkTitle-medium-size-price";
+
+          //imagedataHidden.value = e.target.result.replace(/^.*,/, "");
+          imagedataHidden.value = reader.result;
+          mimetypeHidden.value = e.target.result.match(/^.*(?=;)/)[0];
+          filenameHidden.value = newFilename;
+          const i = document.getElementById("showimage");
+          i.src = reader.result;
+        };
+        // Read in the image file as a Data URL
+        reader.readAsDataURL(file);
+      }
+
+      function handleSubmit(e) {
+        e.preventDefault();
+        const url =
+          "https://script.google.com/macros/s/" +
+          "AKfycbzstM9KLOmk4it6iz7wP8FRlF1SS4f_8H0EdcQBzTBSIDjIRlUUWp56XJEnH_CH2y3U" +
+          "/exec";
+        const fileBase64 = document.getElementById("imagedata-hidden").value;
+        const payload = new FormData(document.getElementById("upload-form"));
+        /* formDataToArray(payload) */
+        
+        /*         let output = ""
+        for (const [key, value] of payload) {
+          output += `${key}: ${value}\n`;
+        } */
+
+        /* console.log(decodeUnicode(fileBase64)); */
+        fetch(url, {
+          method: "POST",
+          mode: "no-cors",
+          body: formDataToJSON(payload),
+        })
+          .then((resp) => resp)
+          .then((data) => {
+            console.log(data);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+        /*         const output = document.getElementById("payload");
+
+        for (const [key, value] of payload) {
+          output.textContent += `${key}: ${value}\n`;
+        }
+        console.log("submit"); */
+      }
+
+      function formDataToArray(fd) {
+        const entries = [...fd.entries()];
+        console.log(entries);
+        return entries
+      }
+
+      function toRequest(fd) {
+        const payload = formDataToJSON(fd)
+        const req = {
+          contextPath: "",
+          postData: {
+            contents: payload.file.type, //image data
+            "length": payload.file.size, //image length
+            "name": "postData",
+            "type": "application/x-www-form-urlencoded", 
+          },
+          contentLength: payload.file.size, //same as contents.length
+          queryString: "",
+          parameters: {
+            "file": payload.file.name,
+            "mimetype": payload.mimetype,
+            "image": payload.image
+          },
+        };
+      }
+      function decodeUnicode(str) {
+        // Going backwards: from bytestream, to percent-encoding, to original string.
+        return decodeURIComponent(
+          atob(str)
+            .split("")
+            .map(function (c) {
+              return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
+            })
+            .join("")
+        );
+      }
+      function formDataToJSON(fd) {
+        let output = {}
+        for (const [key, value] of fd) {
+          output[key] = value
+        }
+        return output;
+      }
+      // when user clicks button #uploadfile, add event handleFileSelect
+      document
+        .getElementById("uploadfile")
+        .addEventListener("change", handleFileSelect, false);
+      document
+        .getElementById("upload-form")
+        .addEventListener("submit", handleSubmit);
+    </script>
+  </body>
+</html>
