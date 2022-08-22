@@ -19,7 +19,7 @@
     >
       <input id="imagedata-hidden" type="hidden" name="image" value="" />
       <input id="mimetype-hidden" type="hidden" name="mimetype" value="" />
-      <input id="filename-hidden" type="hidden" name="filename" value="" />
+      <input id="filename-hidden" type="hidden" name="filename" value="laughing-man.jpg" />
 
       Upload a file
       <label for="uploadFile"
@@ -42,6 +42,34 @@
     </form>
     <div id="payload"></div>
     <script>
+
+      function handleFileSelect(evt) {
+        reader = new FileReader();
+        // remember selected file (first selected)
+        var file = this.files[0];
+        reader.fileName = file.name; // save name
+        // reader.onerror = errorHandler;
+        reader.onabort = function (e) {
+          alert("File read cancelled");
+        };
+        reader.onload = function (e) {
+          const imagedataHidden = document.getElementById("imagedata-hidden");
+          const mimetypeHidden = document.getElementById("mimetype-hidden");
+          const filenameHidden = document.getElementById("filename-hidden");
+          const newFilename = "Green-James-TestWorkTitle-medium-size-price";
+
+          imagedataHidden.value = e.target.result.replace(/^.*,/, "");
+          mimetypeHidden.value = e.target.result.match(/^.*(?=;)/)[0];
+          filenameHidden.value = newFilename;
+        };
+        // Read in the image file as a Data URL
+        reader.readAsDataURL(file);
+      }
+
+      document
+        .getElementById("uploadfile")
+        .addEventListener("change", handleFileSelect, false);
+
       var googleApi = 'https://script.google.com/macros/s/AKfycbzIFdc8WsXthDgXY31iozebBhcE15Q1gUU4cJg1Fd3yuJfigZXFl7BaDth7fEnQ4eOu/exec';
 
       uploadForm.onsubmit = async (e) => {
